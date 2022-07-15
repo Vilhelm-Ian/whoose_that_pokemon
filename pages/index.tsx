@@ -20,7 +20,8 @@ const Pokemon: NextPage = () => {
     get_pokemon();
   }, []);
   return (
-    <div>
+    <div className="container">
+      <img src="/background.png" className="background"></img>
       <img
         className={`${isHidden ? "hidden_pokemon" : "visible_pokemon"}`}
         src={image}
