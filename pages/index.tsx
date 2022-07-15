@@ -28,6 +28,7 @@ const Pokemon: NextPage = () => {
         height={500}
         alt="image of a random pokemon"
       ></img>
+      <button onClick={() => setIsHidden(false)}>SHOW</button>
     </div>
   );
 };
