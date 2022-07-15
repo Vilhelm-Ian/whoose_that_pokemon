@@ -1,13 +1,50 @@
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { GetServerSideProps } from "next";
+import { useState } from "react";
 
-const Pokemon: NextPage = ({ new_image, name }) => {
-  const [image, setImage] = useState(new_image);
+interface AppProps {
+  initial_image: string;
+  initial_name: string;
+}
+
+async function get_data() {
+  let random_number = Math.floor(Math.random() * 300);
+  let res = await fetch(`https://pokeapi.co/api/v2/pokemon/${random_number}`);
+  let data = await res.json();
+  return data;
+}
+
+const Pokemon: NextPage<AppProps> = ({
+  initial_image,
+  initial_name,
+}: AppProps) => {
+  const [image, setImage] = useState(initial_image);
   const [isHidden, setIsHidden] = useState(true);
+  const [name, setName] = useState(initial_name);
+
+  async function reload() {
+    let data = await get_data();
+    let new_image = data.sprites?.front_default;
+    let { name } = data;
+    setImage(new_image);
+    setIsHidden(true);
+    setName(name);
+  }
+
+  let button;
+  if (!isHidden) {
+    button = <button onClick={reload}>Reload</button>;
+  } else {
+    button = <button onClick={() => setIsHidden(false)}>SHOW</button>;
+  }
 
   return (
     <div className="container">
-      <img src="/background.png" className="background"></img>
+      <img
+        src="/background.png"
+        alt="whoose that pokemon card tile"
+        className="background"
+      ></img>
       <div className="data">
         <img
           className={`${isHidden ? "hidden_pokemon" : "visible_pokemon"}`}
@@ -18,18 +55,17 @@ const Pokemon: NextPage = ({ new_image, name }) => {
         ></img>
         {!isHidden ? <p>{name}</p> : ""}
       </div>
-      <button onClick={() => setIsHidden(false)}>SHOW</button>
+      {button}
     </div>
   );
 };
 
-export async function getServerSideProps() {
-  let random_number = Math.floor(Math.random() * 300);
-  let res = await fetch(`https://pokeapi.co/api/v2/pokemon/${random_number}`);
-  let data = await res.json();
-  let new_image = data.sprites?.front_default;
-  let { name } = data;
-  return { props: { new_image, name } };
-}
+export const getServerSideProps: GetServerSideProps = async () => {
+  let data = await get_data();
+  let initial_image: string = data.sprites?.front_default;
+  let name: string = data.name;
+
+  return { props: { initial_image, initial_name: name } };
+};
 
 export default Pokemon;
