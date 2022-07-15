@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Playhouse";
+  src: url("/PlayhouseMedium.ttf");
+}
+
 body {
   margin: 0;
   height: 100%;
@@ -13,6 +18,7 @@ body {
 .visible_pokemon {
   z-index: 1;
   position: fixed;
+  top: 15%;
 }
 
 .hidden_pokemon {
@@ -30,4 +36,11 @@ body {
 
 button {
   position: absolute;
+}
+
+p {
+  font-family: Playhouse;
+  z-index: 1;
+  position: fixed;
+  font-size: 20px;
 }

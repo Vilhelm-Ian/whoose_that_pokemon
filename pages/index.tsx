@@ -1,26 +1,13 @@
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 
-const Pokemon: NextPage = () => {
-  const [image, setImage] = useState(
-    "https://media.istockphoto.com/vectors/loading-icon-vector-illustration-vector-id1335247217?k=20&m=1335247217&s=612x612&w=0&h=CQFY4NO0j2qc6kf4rTc0wTKYWL-9w5ldu-wF8D4oUBk="
-  );
+const Pokemon: NextPage = ({ new_image, name }) => {
+  const [image, setImage] = useState(new_image);
   const [isHidden, setIsHidden] = useState(true);
 
-  useEffect(() => {
-    async function get_pokemon() {
-      let random_number = Math.floor(Math.random() * 300);
-      let res = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${random_number}`
-      );
-      let data = await res.json();
-      let new_image = data.sprites?.front_default;
-      setImage(new_image);
-    }
-    get_pokemon();
-  }, []);
   return (
     <div className="container">
+      {!isHidden ? <p>{name}</p> : ""}
       <img src="/background.png" className="background"></img>
       <img
         className={`${isHidden ? "hidden_pokemon" : "visible_pokemon"}`}
@@ -33,5 +20,14 @@ const Pokemon: NextPage = () => {
     </div>
   );
 };
+
+export async function getServerSideProps() {
+  let random_number = Math.floor(Math.random() * 300);
+  let res = await fetch(`https://pokeapi.co/api/v2/pokemon/${random_number}`);
+  let data = await res.json();
+  let new_image = data.sprites?.front_default;
+  let { name } = data;
+  return { props: { new_image, name } };
+}
 
 export default Pokemon;
