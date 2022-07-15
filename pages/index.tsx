@@ -7,15 +7,17 @@ const Pokemon: NextPage = ({ new_image, name }) => {
 
   return (
     <div className="container">
-      {!isHidden ? <p>{name}</p> : ""}
       <img src="/background.png" className="background"></img>
-      <img
-        className={`${isHidden ? "hidden_pokemon" : "visible_pokemon"}`}
-        src={image}
-        width={500}
-        height={500}
-        alt="image of a random pokemon"
-      ></img>
+      <div className="data">
+        <img
+          className={`${isHidden ? "hidden_pokemon" : "visible_pokemon"}`}
+          src={image}
+          width={500}
+          height={500}
+          alt="image of a random pokemon"
+        ></img>
+        {!isHidden ? <p>{name}</p> : ""}
+      </div>
       <button onClick={() => setIsHidden(false)}>SHOW</button>
     </div>
   );
