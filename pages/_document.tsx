@@ -6,7 +6,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <link
-            href="http://fonts.cdnfonts.com/css/playhouse"
+            href="https://fonts.cdnfonts.com/css/playhouse"
             rel="stylesheet"
           />
         </Head>
