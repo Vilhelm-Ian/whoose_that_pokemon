@@ -5,6 +5,9 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <meta charSet="UTF-*" />
+          <meta name="description" content="Whoose that pokemon!!" />
+          <meta name="image" content="/background.png" />
           <link
             href="https://fonts.cdnfonts.com/css/playhouse"
             rel="stylesheet"
