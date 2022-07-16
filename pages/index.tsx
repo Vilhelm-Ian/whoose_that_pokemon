@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface AppProps {
   initial_image: string;
@@ -21,6 +21,13 @@ const Pokemon: NextPage<AppProps> = ({
   const [image, setImage] = useState(initial_image);
   const [isHidden, setIsHidden] = useState(true);
   const [name, setName] = useState(initial_name);
+  const [width, setWidth] = useState(500);
+  const [height, setHeight] = useState(500);
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  }, []);
 
   async function reload() {
     let data = await get_data();
@@ -43,6 +50,8 @@ const Pokemon: NextPage<AppProps> = ({
       <img
         src="/background.png"
         alt="whoose that pokemon card tile"
+        height={height}
+        width={width}
         className="background"
       ></img>
       <div className="data">
