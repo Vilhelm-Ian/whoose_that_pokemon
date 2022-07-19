@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 interface AppProps {
   initial_image: string;
@@ -47,21 +48,21 @@ const Pokemon: NextPage<AppProps> = ({
 
   return (
     <div className="container">
-      <img
+      <Image
         src="/background.png"
         alt="whoose that pokemon card tile"
         height={height}
         width={width}
         className="background"
-      ></img>
+      ></Image>
       <div className="data">
-        <img
+        <Image
           className={`${isHidden ? "hidden_pokemon" : "visible_pokemon"}`}
           src={image}
           width={500}
           height={500}
           alt="image of a random pokemon"
-        ></img>
+        ></Image>
         {!isHidden ? <p>{name}</p> : ""}
       </div>
       {button}
